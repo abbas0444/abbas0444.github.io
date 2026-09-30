@@ -8,4 +8,4 @@ A single static page (`index.html`) with no build step. Edit the HTML, commit, p
 
 - `index.html` — the page (content, styles and a little JavaScript for the theme toggle and live GitHub star counts)
 - `assets/abbas-raza.jpg` — profile photo
-- `assets/Abbas_Raza_CV.pdf` — downloadable résumé
+- `assets/Abbas_Raza_CV_ATS.pdf` — downloadable résumé
