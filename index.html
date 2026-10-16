@@ -226,7 +226,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <div class="stat"><b>6+</b><span>Years of experience</span></div>
       <div class="stat"><b>2</b><span>Apps on the Frappe Marketplace</span></div>
       <div class="stat"><b>3</b><span>National healthcare systems delivered</span></div>
-      <div class="stat"><b id="ghStars">12</b><span>GitHub stars on open-source work</span></div>
+      <div class="stat"><b id="ghStars">16</b><span>GitHub stars across my repos</span></div>
     </div>
   </div>
 </section>
@@ -508,9 +508,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   Promise.all(repos.map(function(el){
     return fetch('https://api.github.com/repos/'+el.getAttribute('data-repo')).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
   })).then(function(rs){
-    var total=0, any=false;
-    rs.forEach(function(r,i){ if(r&&typeof r.stargazers_count==='number'){ any=true; total+=r.stargazers_count; repos[i].querySelector('.n').textContent=r.stargazers_count; } });
-    var s=document.getElementById('ghStars'); if(any) s.textContent=total; else s.textContent='12';
+    rs.forEach(function(r,i){ if(r&&typeof r.stargazers_count==='number'){ repos[i].querySelector('.n').textContent=r.stargazers_count; } });
+  });
+  // the total counts every public repo live; private repos are invisible to the API, so their stars are added by hand
+  var PRIVATE_STARS=2;
+  fetch('https://api.github.com/users/abbas0444/repos?per_page=100').then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}).then(function(rs){
+    if(!Array.isArray(rs)) return;
+    var total=PRIVATE_STARS;
+    rs.forEach(function(r){ if(typeof r.stargazers_count==='number') total+=r.stargazers_count; });
+    document.getElementById('ghStars').textContent=total;
   });
 })();
 </script>
